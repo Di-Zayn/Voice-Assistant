@@ -1,5 +1,6 @@
 package com.example.HCI_Project
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +9,6 @@ import com.baidu.speech.EventListener
 import com.baidu.speech.EventManager
 import com.baidu.speech.EventManagerFactory
 import com.baidu.speech.asr.SpeechConstant
-import com.google.gson.Gson
 
 class AsrViewModel(context: Context) : ViewModel(), EventListener {
 
@@ -27,7 +27,9 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
 
 
     fun start() {
-        asr.send(SpeechConstant.ASR_START, "{}", null, 0, 0)
+        val json =
+            "{\"vad\":\"touch\",\"accept-audio-data\":false,\"accept-audio-volume\":false,\"pid\":15364,\"bot_session_list\":[{\"bot_id\":\"1194981\",\"bot_session_id\":\"\"}]}"
+        asr.send(SpeechConstant.ASR_START, json, null, 0, 0)
     }
 
     fun stop() {
@@ -45,6 +47,18 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
                 // 一句话的最终识别结果
                 _text.value = params
             }
+        }
+
+        if("unit.finish".equals(name)){
+            Log.i(TAG, "UNIT结果:"+params);
+        }
+
+        if (name.equals(SpeechConstant.CALLBACK_EVENT_ASR_FINISH)) {
+            Log.i(TAG, "识别结束: " + params);
+        }
+
+        if (name.equals(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL)) {
+            Log.i(TAG, "语义解析结果: " + params);
         }
     }
 

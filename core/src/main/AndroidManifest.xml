@@ -9,16 +9,19 @@
 <!--    <uses-permission android:name="android.permission.BLUETOOTH" />-->
 <!--    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />-->
 <!--    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />-->
+<!--    26255916-->
     <application>
         <meta-data
             android:name="com.baidu.speech.APP_ID"
-            android:value="26255916"/>
+            android:value="26340552"/>
 
         <meta-data
                 android:name="com.baidu.speech.API_KEY"
-                android:value="G5xp7rwAxUpTmWuj45dcYcdj"/>
+                android:value="owE1XHgeaGcQcwDi6bTrAbMA"/>
+<!--        G5xp7rwAxUpTmWuj45dcYcdj-->
         <meta-data
                 android:name="com.baidu.speech.SECRET_KEY"
-                android:value="32ZImyYx5xNu7frVbBxBHi0iKWgoOkRW"/>
+                android:value="KXcqBEl0ry4QyDdQVpFCQvwiqk6rjCab"/>
+<!--        32ZImyYx5xNu7frVbBxBHi0iKWgoOkRW-->
     </application>
 </manifest>
