@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 rootProject.name = "My Application"
 include ':app'
 include ':core'
+include ':live2dlib'
+include ':live2D'
