@@ -14,30 +14,27 @@ import com.baidu.speech.EventListener
 
 
 @Composable
-fun RecordScreen(
+fun RecordBoard(
     viewModel: AsrViewModel,
 ) {
-//    val text = viewModel.text.observeAsState()
+
     val text = viewModel.text.observeAsState()
 
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Column {
-            text.value?.let { Greeting(it) }
-            Button(onClick = {
-                println("start")
-                viewModel.start()
-            }) {
-                Text(text = "Start")
-            }
-            Button(onClick = {
-                println("stop")
-                viewModel.stop()
-            }) {
-                Text(text = "Stop")
-            }
+
+    Column {
+        text.value?.let { Greeting(it) }
+        Button(onClick = {
+            println("start")
+            viewModel.start()
+        }) {
+            Text(text = "Start")
+        }
+        Button(onClick = {
+            println("stop")
+            viewModel.stop()
+        }) {
+            Text(text = "Stop")
         }
     }
+
 }

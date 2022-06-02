@@ -2,72 +2,25 @@ package com.example.HCI_Project
 
 import android.Manifest
 import android.os.Bundle
-import android.util.Log
+import android.view.Window
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.baidu.speech.EventListener
-import com.baidu.speech.EventManager
-import com.baidu.speech.EventManagerFactory
-import com.baidu.speech.asr.SpeechConstant
 import com.example.HCI_Project.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
-    // 能否建一个单例作为全局的listener
-//    private val listener = object: EventListener {
-//
-//        private var asr: EventManager = EventManagerFactory.create(this@MainActivity, "asr")
-//
-//        init {
-//            asr.registerListener(this)
-//        }
-//
-//        override fun onEvent(name: String?, params: String?, data: ByteArray?, offset: Int, length: Int) {
-//            if (name.equals(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL)) {
-//                // 识别相关的结果都在这里
-//                if (params == null || params.isEmpty()) {
-//                    return
-//                }
-//                if (params.contains("\"final_result\"")) {
-//                    // 一句话的最终识别结果
-//                    GlobalViewModel.setText(params)
-//                    // 用global view model 存储
-//                }
-//            }
-//        }
-//
-//        fun start() {
-//            asr.send(SpeechConstant.ASR_START, "{}", null, 0, 0)
-//        }
-//
-//        fun stop() {
-//            asr.send(SpeechConstant.ASR_STOP, "{}", null, 0, 0)
-//        }
-//
-//        fun destroy() {
-//            //发送取消事件
-//            asr.send(SpeechConstant.ASR_CANCEL, "{}", null, 0, 0);
-//            //退出事件管理器
-//            // 必须与registerListener成对出现，否则可能造成内存泄露
-//            asr.unregisterListener(this);
-//        }
-//
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         // 申请权限
         val permission =
@@ -87,11 +40,11 @@ class MainActivity : ComponentActivity() {
             MyApplicationTheme {
                 val navController = rememberNavController()
                 NavHost(navController = navController,
-                    startDestination = "home",
+                    startDestination = "assistant",
                     route = "root"
                 ) {
-                    composable("home") {
-                        RecordScreen(asr)
+                    composable("assistant") {
+                        live2d(asr)
                     }
                 }
             }

@@ -4,6 +4,7 @@
     package="com.example.HCI_Project">
 
     <application
+        tools:replace="android:icon,android:theme"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
