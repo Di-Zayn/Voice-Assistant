@@ -20,7 +20,6 @@ fun RecordBoard(
 
     val text = viewModel.text.observeAsState()
 
-
     Column {
         text.value?.let { Greeting(it) }
         Button(onClick = {

@@ -9,6 +9,7 @@ import com.baidu.speech.EventListener
 import com.baidu.speech.EventManager
 import com.baidu.speech.EventManagerFactory
 import com.baidu.speech.asr.SpeechConstant
+import org.json.JSONObject
 
 class AsrViewModel(context: Context) : ViewModel(), EventListener {
 
@@ -28,7 +29,12 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
 
     fun start() {
         val json =
-            "{\"vad\":\"touch\",\"accept-audio-data\":false,\"accept-audio-volume\":false,\"pid\":15364,\"bot_session_list\":[{\"bot_id\":\"1194981\",\"bot_session_id\":\"\"}]}"
+            "{\"vad\":\"touch\"," +
+                    "\"accept-audio-data\":false," +
+                    "\"accept-audio-volume\":false," +
+                    "\"pid\":15364," +
+                    "\"bot_session_list\":[{\"bot_id\":\"1194981\",\"bot_session_id\":\"\"}]}"
+
         asr.send(SpeechConstant.ASR_START, json, null, 0, 0)
     }
 
@@ -60,6 +66,8 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
         if (name.equals(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL)) {
             Log.i(TAG, "语义解析结果: " + params);
         }
+
+
     }
 
     override fun onCleared() {
