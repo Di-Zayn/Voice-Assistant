@@ -1,5 +1,6 @@
 package com.example.HCI_Project
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +13,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
@@ -22,6 +22,7 @@ import jp.live2d.sample.LAppLive2DManager
 import jp.live2d.utils.android.FileManager
 import jp.live2d.utils.android.SoundManager
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun live2d(
     viewModel: AsrViewModel,
@@ -31,6 +32,7 @@ fun live2d(
     val live2DMgr = LAppLive2DManager()
     SoundManager.init(context)
     val view = live2DMgr.createView(context as Activity?)
+    live2DMgr.onPause()
     val layout = remember {
         FrameLayout(context).apply {
             id = R.id.live2DLayout
@@ -49,7 +51,7 @@ fun live2d(
             )
         }
 
-        RecordBoard(viewModel)
+        RecordBoard(viewModel,live2DMgr)
 
     }
 

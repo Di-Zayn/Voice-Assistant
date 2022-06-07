@@ -9,12 +9,16 @@ import com.baidu.speech.EventListener
 import com.baidu.speech.EventManager
 import com.baidu.speech.EventManagerFactory
 import com.baidu.speech.asr.SpeechConstant
-import org.json.JSONObject
+import com.baidu.tts.client.SpeechSynthesizer
+import com.baidu.tts.client.SpeechSynthesizerListener
+import com.baidu.tts.client.TtsMode
+
 
 class AsrViewModel(context: Context) : ViewModel(), EventListener {
 
     // 能否在此注入全局的context 从而将其变为单例
     private var asr: EventManager = EventManagerFactory.create(context, "asr")
+
 
 
     private val _text = MutableLiveData<String>()
@@ -25,6 +29,7 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
     init {
         asr.registerListener(this)
     }
+
 
 
     fun start() {
@@ -41,7 +46,6 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
     fun stop() {
         asr.send(SpeechConstant.ASR_STOP, "{}", null, 0, 0)
     }
-
     override fun onEvent(name: String?, params: String?, data: ByteArray?, offset: Int, length: Int) {
         println("rec")
         if (name.equals(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL)) {
@@ -79,6 +83,7 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
         asr.unregisterListener(this);
     }
 
+
 //    override fun onEvent(name: String?, params: String?, data: ByteArray?, offset: Int, length: Int) {
 //        if (name == SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL) {
 //            // 识别相关的结果都在这里
@@ -106,3 +111,5 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
 
 
 }
+
+
