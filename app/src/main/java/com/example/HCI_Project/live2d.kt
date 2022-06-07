@@ -31,8 +31,7 @@ fun live2d(
     val context = LocalContext.current
     val live2DMgr = LAppLive2DManager()
     SoundManager.init(context)
-    val view = live2DMgr.createView(context as Activity?)
-    live2DMgr.onPause()
+    val view:View = live2DMgr.createView(context as Activity?)
     val layout = remember {
         FrameLayout(context).apply {
             id = R.id.live2DLayout
@@ -51,10 +50,10 @@ fun live2d(
             )
         }
 
-        RecordBoard(viewModel,live2DMgr)
+        RecordBoard(viewModel,view)
 
     }
-
+    VoiceTTS.start("你好，有什么可以帮助您的？")
     FileManager.init(context)
 
 }

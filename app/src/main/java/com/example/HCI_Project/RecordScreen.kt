@@ -2,26 +2,20 @@ package com.example.HCI_Project
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import com.baidu.speech.asr.SpeechConstant
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.baidu.speech.EventListener
-import jp.live2d.sample.LAppLive2DManager
+import android.view.View
 
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun RecordBoard(
-    viewModel: AsrViewModel,live2DMgr: LAppLive2DManager
+    viewModel: AsrViewModel,l2dview: View
 ) {
 
     val text = viewModel.text.observeAsState()
@@ -41,6 +35,8 @@ fun RecordBoard(
                 viewModel.stop()
                 state_text="start"
                 VoiceTTS.start("你好")
+                //说完话增加模拟点击
+                SimulateTouch.simulateTouchEvent(l2dview, l2dview.width/2f,l2dview.height/2f)
             }
         }){
                 Text(text =state_text)

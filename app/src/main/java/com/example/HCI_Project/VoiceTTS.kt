@@ -26,6 +26,8 @@ object VoiceTTS : SpeechSynthesizerListener {
         mSpeechSynthesizer.setSpeechSynthesizerListener(this)
         mSpeechSynthesizer.initTts(TtsMode.ONLINE)
 
+        mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_SPEAKER, "4")
+
 
     }
     //开始播放
