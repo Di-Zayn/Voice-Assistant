@@ -37,7 +37,6 @@ fun live2d(
             id = R.id.live2DLayout
         }
     }
-
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(factory = {layout}) {
             layout.addView(
@@ -50,10 +49,11 @@ fun live2d(
             )
         }
 
-        RecordBoard(viewModel,view)
+        RecordBoard(viewModel,view,live2DMgr)
 
     }
     VoiceTTS.start("你好，有什么可以帮助您的？")
+
     FileManager.init(context)
 
 }

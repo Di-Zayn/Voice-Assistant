@@ -10,12 +10,13 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import android.view.View
+import jp.live2d.sample.LAppLive2DManager
 
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun RecordBoard(
-    viewModel: AsrViewModel,l2dview: View
+    viewModel: AsrViewModel,l2dview: View,l2dmanager: LAppLive2DManager
 ) {
 
     val text = viewModel.text.observeAsState()
@@ -41,12 +42,9 @@ fun RecordBoard(
         }){
                 Text(text =state_text)
         }
-//        Button(onClick = {
-//            println("speak")
-//            VoiceTTS.start("你好")
-//        }) {
-//            Text(text = "speak")
-//        }
+        Button(onClick = { l2dmanager.changeModel() }) {
+            Text(text = "change")
+        }
     }
 
 }

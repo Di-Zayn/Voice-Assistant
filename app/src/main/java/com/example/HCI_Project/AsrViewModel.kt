@@ -12,6 +12,7 @@ import com.baidu.speech.asr.SpeechConstant
 import com.baidu.tts.client.SpeechSynthesizer
 import com.baidu.tts.client.SpeechSynthesizerListener
 import com.baidu.tts.client.TtsMode
+import org.json.JSONObject
 
 
 class AsrViewModel(context: Context) : ViewModel(), EventListener {
@@ -19,6 +20,8 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
     // 能否在此注入全局的context 从而将其变为单例
     private var asr: EventManager = EventManagerFactory.create(context, "asr")
 
+    //说话的记录
+    public var speak_list= ArrayList<String>()
 
 
     private val _text = MutableLiveData<String>()
@@ -55,7 +58,9 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
             }
             if (params.contains("\"final_result\"")) {
                 // 一句话的最终识别结果
-                _text.value = params
+                val result=JSONObject(params).getString("best_result")
+                _text.value = result
+                speak_list.add(result)
             }
         }
 

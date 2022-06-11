@@ -24,10 +24,10 @@ public class LAppDefine
 	public static final float VIEW_LOGICAL_LEFT = -1;
 	public static final float VIEW_LOGICAL_RIGHT = 1;
 
-	public static final float VIEW_LOGICAL_MAX_LEFT = -2;
-	public static final float VIEW_LOGICAL_MAX_RIGHT = 2;
-	public static final float VIEW_LOGICAL_MAX_BOTTOM = -2;
-	public static final float VIEW_LOGICAL_MAX_TOP = 2;
+	public static final float VIEW_LOGICAL_MAX_LEFT = (float) -2.2;
+	public static final float VIEW_LOGICAL_MAX_RIGHT = (float) 2.2;
+	public static final float VIEW_LOGICAL_MAX_BOTTOM = (float) -2.2;
+	public static final float VIEW_LOGICAL_MAX_TOP = (float) 2.2;
 
 	
 	public static final String BACK_IMAGE_NAME = "image/back_class_normal.png" ;

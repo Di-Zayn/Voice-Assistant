@@ -15,6 +15,8 @@ object VoiceTTS : SpeechSynthesizerListener {
     private const val SECRET_KEY="32ZImyYx5xNu7frVbBxBHi0iKWgoOkRW"
     //TTS对象
     private lateinit var mSpeechSynthesizer:SpeechSynthesizer
+    //存放回答内容
+    public var responce_list= ArrayList<String>()
     //初始化TTS
     fun initTTS(mContext:Context){
         mSpeechSynthesizer = SpeechSynthesizer.getInstance()
@@ -30,8 +32,9 @@ object VoiceTTS : SpeechSynthesizerListener {
 
 
     }
-    //开始播放
+    //开始播放，保存回答内容
     fun start(text:String){
+        responce_list.add(text)
         mSpeechSynthesizer.speak(text)
     }
 
