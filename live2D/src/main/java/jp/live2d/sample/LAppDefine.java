@@ -34,10 +34,11 @@ public class LAppDefine
 
 	
 	public static final String MODEL_HARU		= "live2d/haru/haru.model.json";
-	public static final String MODEL_HARU_A		= "live2d/haru/haru_01.model.json";
-	public static final String MODEL_HARU_B		= "live2d/haru/haru_02.model.json";
-	public static final String MODEL_SHIZUKU	= "live2d/shizuku/shizuku.model.json";
-	public static final String MODEL_WANKO 		= "live2d/wanko/wanko.model.json";
+	public static final String MODEL_HARU2		= "live2d/haru02/haru02.model.json";
+	public static final String hijiki	= "live2d/hijiki/index.json";
+	public static final String tororo 		= "live2d/tororo/index.json";
+	public static final String wanko	= "live2d/wanko/wanko.model.json";
+
 
 	
 	static final String MOTION_GROUP_IDLE		="idle";		

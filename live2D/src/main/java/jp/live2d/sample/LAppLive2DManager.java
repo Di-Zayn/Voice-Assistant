@@ -63,7 +63,7 @@ public class LAppLive2DManager
 			
 			reloadFlg=false;
 
-			int no = modelCount % 4;
+			int no = modelCount % 5;
 
 			try {
 				switch (no) {
@@ -78,27 +78,31 @@ public class LAppLive2DManager
 					releaseModel();
 
 					models.add(new LAppModel());
-					models.get(0).load(gl, LAppDefine.MODEL_SHIZUKU);
+					models.get(0).load(gl, LAppDefine.MODEL_HARU2);
 					models.get(0).feedIn();
 					break;
 				case 2:
 					releaseModel();
 
 					models.add(new LAppModel());
-					models.get(0).load(gl, LAppDefine.MODEL_WANKO);
+					models.get(0).load(gl, LAppDefine.hijiki);
 					models.get(0).feedIn();
 					break;
 				case 3:
 					releaseModel();
 
 					models.add(new LAppModel());
-					models.get(0).load(gl, LAppDefine.MODEL_HARU_A);
+					models.get(0).load(gl, LAppDefine.tororo);
 					models.get(0).feedIn();
 
-					models.add(new LAppModel());
-					models.get(1).load(gl, LAppDefine.MODEL_HARU_B);
-					models.get(1).feedIn();
 					break;
+				case 4:
+					releaseModel();
+					models.add(new LAppModel());
+					models.get(0).load(gl, LAppDefine.wanko);
+					models.get(0).feedIn();
+					break;
+
 				default:
 
 					break;
