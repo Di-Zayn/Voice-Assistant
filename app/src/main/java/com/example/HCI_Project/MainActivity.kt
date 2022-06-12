@@ -46,7 +46,10 @@ class MainActivity : ComponentActivity() {
                     route = "root"
                 ) {
                     composable("assistant") {
-                        live2d(asr)
+                        live2d(asr,navController)
+                    }
+                    composable("chatlist") {
+                        chatlist(navController)
                     }
                 }
             }

@@ -18,6 +18,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavController
 import jp.live2d.sample.LAppLive2DManager
 import jp.live2d.utils.android.FileManager
 import jp.live2d.utils.android.SoundManager
@@ -25,7 +26,7 @@ import jp.live2d.utils.android.SoundManager
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun live2d(
-    viewModel: AsrViewModel,
+    viewModel: AsrViewModel,navController: NavController
 ) {
 
     val context = LocalContext.current
@@ -49,7 +50,7 @@ fun live2d(
             )
         }
 
-        RecordBoard(viewModel,view,live2DMgr)
+        RecordBoard(viewModel,view,live2DMgr,navController)
 
     }
     VoiceTTS.start("你好，有什么可以帮助您的？")
