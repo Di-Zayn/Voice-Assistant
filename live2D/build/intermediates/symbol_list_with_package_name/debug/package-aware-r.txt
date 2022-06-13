@@ -1,0 +1,10 @@
+jp.live2d.sample
+drawable icon
+drawable icon_gear
+id imageButton1
+id live2DLayout
+id menu_settings
+layout activity_main
+menu activity_main
+string app_name
+style AppTheme
