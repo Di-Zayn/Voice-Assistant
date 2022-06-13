@@ -31,7 +31,7 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
     private val _code = MutableLiveData("0")
     val code = _code
 
-    private val a = MutableLiveData<String>()
+    private val intentObj = MutableLiveData<String>()
 
     init {
         asr.registerListener(this)
@@ -46,6 +46,10 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
             pattern = "Chat"
             _code.value = "0"
         }
+    }
+
+    fun getIntentObj(): String? {
+        return intentObj.value
     }
 
 
@@ -77,8 +81,7 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
             "{\"vad\":\"touch\"," +
                     "\"accept-audio-data\":false," +
                     "\"accept-audio-volume\":true," +
-                    "\"pid\":15363," +
-                    "\"bot_session_list\":[{\"bot_id\":\"1194981\",\"bot_session_id\":\"\"}]}"
+                    "\"pid\":15363}"
 
         asr.send(SpeechConstant.ASR_START, json, null, 0, 0)
     }
@@ -121,7 +124,25 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
                 data?.let {
                     val nlu = String(it, offset, length)
                     Log.i(TAG, "语义解析结果: " + nlu)
-                    _code.value = "1"
+                    val res = nlu.split("\"")
+                    when (res[res.indexOf("intent") + 2]) {
+                        "SEARCH" -> {
+                            val obj = res[res.indexOf("word") + 2]
+                            intentObj.value = obj.dropLast(1) //去掉。
+                            _code.value = "2"
+                        }
+                        "OPEN_ADDRESS_BOOK" -> {
+                            _code.value = "1"
+                        }
+                        "VIEW_SNS" -> {
+                            _code.value = "3"
+                        }
+
+
+                    }
+
+//                    var index=res.indexOf("normalized_word")
+//                    _code.value = "2"
                 }
             }
 

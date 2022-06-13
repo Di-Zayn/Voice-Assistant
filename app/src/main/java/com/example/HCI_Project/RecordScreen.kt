@@ -41,12 +41,18 @@ fun RecordBoard(
     val code = viewModel.code.observeAsState()
     val launcher = rememberLauncherForActivityResult(UserContracts()) {
         Log.i(TAG, "init launcher")
+        viewModel.resetCode()
     }
     when(code.value) {
+        "-1" -> {}
         "0" -> {}
-        "1" -> {
-            // 通讯录
-            launcher.launch("1")
+        else -> {
+            val map = mutableMapOf<String, String?>()
+            code.value?.let {
+                map["code"] = code.value
+            }
+            map["obj"] = viewModel.getIntentObj()
+            launcher.launch(map)
         }
     }
     Box(modifier = Modifier.fillMaxSize()){
