@@ -42,9 +42,9 @@
 		],
 		"tap_body":
 		[
-			{ "file":"motions/tapBody_00.mtn" , "sound":"sounds/tapBody_00.wav","fade_out":0},
-			{ "file":"motions/tapBody_01.mtn" , "sound":"sounds/tapBody_01.wav","fade_out":0},
-			{ "file":"motions/tapBody_02.mtn" , "sound":"sounds/tapBody_02.wav","fade_out":0}
+			{ "file":"motions/tapBody_00.mtn" , "fade_out":0},
+			{ "file":"motions/tapBody_01.mtn" , "fade_out":0},
+			{ "file":"motions/tapBody_02.mtn" , "fade_out":0}
 		],
 		"pinch_in":
 		[
