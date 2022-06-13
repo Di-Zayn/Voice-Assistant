@@ -1,6 +1,7 @@
 package com.example.HCI_Project
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -10,8 +11,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import android.view.View
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.navigation.NavController
 import jp.live2d.sample.LAppLive2DManager
+import jp.live2d.sample.LAppLive2DManager.TAG
 
 
 @SuppressLint("UnrememberedMutableState")
@@ -22,6 +25,17 @@ fun RecordBoard(
 
     val text = viewModel.text.observeAsState()
     var state_text by mutableStateOf("start")
+    val code = viewModel.code.observeAsState()
+    val launcher = rememberLauncherForActivityResult(UserContracts()) {
+        Log.i(TAG, "init launcher")
+    }
+    when(code.value) {
+        "0" -> {}
+        "1" -> {
+            // 通讯录
+            launcher.launch("1")
+        }
+    }
     Column {
         text.value?.let { Greeting(it) }
         Button(onClick = {
@@ -42,8 +56,12 @@ fun RecordBoard(
         }){
                 Text(text =state_text)
         }
-        Button(onClick = { l2dmanager.changeModel() }) {
+        Button(onClick = {
+            l2dmanager.changeModel() }) {
             Text(text = "change")
+        }
+        Button(onClick = { viewModel.changePattern() }) {
+            Text(text = "changePattern")
         }
         Button(onClick = { navController.navigate("chatlist") }) {
             Text(text = "chatpage")

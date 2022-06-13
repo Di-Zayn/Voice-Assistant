@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         permission.launch(arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_NETWORK_STATE,
-            Manifest.permission.INTERNET, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            Manifest.permission.INTERNET, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_CONTACTS))
 
         val asr = AsrViewModel(this) //如何获取上下文来着？ 以及如何定义一个全局的上下文
         VoiceTTS.initTTS(this)

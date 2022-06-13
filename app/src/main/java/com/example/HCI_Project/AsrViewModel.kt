@@ -19,11 +19,13 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
 
     // 能否在此注入全局的context 从而将其变为单例
     private var asr: EventManager = EventManagerFactory.create(context, "asr")
-
-
+    private var pattern = "Chat"
 
     private val _text = MutableLiveData<String>()
     val text = _text
+
+    private val _code = MutableLiveData("0")
+    val code = _code
 
     private val a = MutableLiveData<String>()
 
@@ -31,14 +33,45 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
         asr.registerListener(this)
     }
 
+    fun changePattern() {
+        if (pattern == "Chat") {
+            pattern = "Assistant"
+        } else {
+            pattern = "Chat"
+            _code.value = "0"
+        }
+    }
 
 
     fun start() {
+        when(pattern) {
+            "Chat" -> {
+                startChatBot()
+            }
+            "Assistant" -> {
+                startAssistant()
+            }
+        }
+    }
+    private fun startChatBot() {
+        print("chat")
         val json =
             "{\"vad\":\"touch\"," +
                     "\"accept-audio-data\":false," +
-                    "\"accept-audio-volume\":false," +
+                    "\"accept-audio-volume\":true," +
                     "\"pid\":15364," +
+                    "\"bot_session_list\":[{\"bot_id\":\"1194981\",\"bot_session_id\":\"\"}]}"
+
+        asr.send(SpeechConstant.ASR_START, json, null, 0, 0)
+    }
+
+    private fun startAssistant() {
+        print("start")
+        val json =
+            "{\"vad\":\"touch\"," +
+                    "\"accept-audio-data\":false," +
+                    "\"accept-audio-volume\":true," +
+                    "\"pid\":15363," +
                     "\"bot_session_list\":[{\"bot_id\":\"1194981\",\"bot_session_id\":\"\"}]}"
 
         asr.send(SpeechConstant.ASR_START, json, null, 0, 0)
@@ -48,36 +81,40 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
         asr.send(SpeechConstant.ASR_STOP, "{}", null, 0, 0)
     }
     override fun onEvent(name: String?, params: String?, data: ByteArray?, offset: Int, length: Int) {
-        println("rec")
-        if (name.equals(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL)) {
-            // 识别相关的结果都在这里
-            if (params == null || params.isEmpty()) {
-                return
+
+        when (name) {
+
+            "unit.finish" -> {
+                Log.i(TAG, "UNIT结果:"+params);
             }
-            if (params.contains("\"final_result\"")) {
-                // 一句话的最终识别结果
-               // val result=JSONObject(params).getString("best_result")
-                var (zero, one, two)=JSONObject(params).getString("results_recognition").split("\"")
-                _text.value = one
-                VoiceTTS.responce_list.add("$"+one)
-                VoiceTTS.start("你好")
+
+            SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL -> {
+
+                if (params == null || params.isEmpty()) {
+                    return
+                }
+
+                if (params.contains("\"final_result\"")) {
+                    // 一句话的最终识别结果
+                    var (zero, one, two)=JSONObject(params).getString("results_recognition").split("\"")
+                    _text.value = one
+                    VoiceTTS.responce_list.add("$"+one)
+                    VoiceTTS.start("你好")
+                }
+
+                data?.let {
+                    val nlu = String(it, offset, length)
+                    Log.i(TAG, "语义解析结果: " + nlu)
+                    _code.value = "1"
+                }
+            }
+
+            SpeechConstant.CALLBACK_EVENT_ASR_FINISH -> {
+                Log.i(TAG, "识别结束: " + params);
             }
         }
-
-        if("unit.finish".equals(name)){
-            Log.i(TAG, "UNIT结果:"+params);
-        }
-
-        if (name.equals(SpeechConstant.CALLBACK_EVENT_ASR_FINISH)) {
-            Log.i(TAG, "识别结束: " + params);
-        }
-
-        if (name.equals(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL)) {
-            Log.i(TAG, "语义解析结果: " + params);
-        }
-
-
     }
+
 
     override fun onCleared() {
         super.onCleared()
