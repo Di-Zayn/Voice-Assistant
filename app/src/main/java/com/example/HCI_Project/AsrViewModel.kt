@@ -32,7 +32,6 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
     val code = _code
 
     private val intentObj = MutableLiveData<String>()
-
     init {
         asr.registerListener(this)
     }
@@ -48,11 +47,10 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
         }
     }
 
+
     fun getIntentObj(): String? {
         return intentObj.value
     }
-
-
     fun start() {
         when(pattern) {
             "Chat" -> {
@@ -128,7 +126,12 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
                     when (res[res.indexOf("intent") + 2]) {
                         "SEARCH" -> {
                             val obj = res[res.indexOf("word") + 2]
-                            intentObj.value = obj.dropLast(1) //去掉。
+                            if(obj.get(obj.length-1)=='.'||obj.get(obj.length-1)=='。'||obj.get(obj.length-1)=='？'||obj.get(obj.length-1)=='！'||obj.get(obj.length-1)=='?'||obj.get(obj.length-1)=='!'){
+                                intentObj.value = obj.dropLast(1) //去掉。
+                            }else{
+                                intentObj.value = obj
+                            }
+
                             _code.value = "2"
                         }
                         "OPEN_ADDRESS_BOOK" -> {
@@ -141,8 +144,6 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
 
                     }
 
-//                    var index=res.indexOf("normalized_word")
-//                    _code.value = "2"
                 }
             }
 
