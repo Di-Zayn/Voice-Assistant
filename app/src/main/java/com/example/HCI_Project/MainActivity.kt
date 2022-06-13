@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.HCI_Project.ui.theme.MyApplicationTheme
+import jp.live2d.sample.LAppLive2DManager
 
 class MainActivity : ComponentActivity() {
 
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
         val asr = AsrViewModel(this) //如何获取上下文来着？ 以及如何定义一个全局的上下文
         VoiceTTS.initTTS(this)
         VoiceTTS.start("你好，有什么可以帮助您的？")
+
 
         // ui
         setContent {

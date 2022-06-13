@@ -12,6 +12,7 @@ import com.baidu.speech.asr.SpeechConstant
 import com.baidu.tts.client.SpeechSynthesizer
 import com.baidu.tts.client.SpeechSynthesizerListener
 import com.baidu.tts.client.TtsMode
+import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -86,6 +87,9 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
 
             "unit.finish" -> {
                 Log.i(TAG, "UNIT结果:"+params);
+                var res= params!!.split("\"")
+                var index=res.indexOf("normalized_word")
+                VoiceTTS.start(res[index+2])
             }
 
             SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL -> {
@@ -99,7 +103,7 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
                     var (zero, one, two)=JSONObject(params).getString("results_recognition").split("\"")
                     _text.value = one
                     VoiceTTS.responce_list.add("$"+one)
-                    VoiceTTS.start("你好")
+
                 }
 
                 data?.let {
