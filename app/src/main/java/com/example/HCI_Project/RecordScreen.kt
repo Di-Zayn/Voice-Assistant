@@ -3,8 +3,6 @@ package com.example.HCI_Project
 import android.annotation.SuppressLint
 import android.text.Layout
 import android.util.Log
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -16,8 +14,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +24,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import jp.live2d.sample.LAppLive2DManager
 import jp.live2d.sample.LAppLive2DManager.TAG
@@ -37,7 +36,7 @@ fun RecordBoard(
     viewModel: AsrViewModel,l2dview: View,l2dmanager: LAppLive2DManager,navController: NavController
 ) {
 
-    val text = viewModel.text.observeAsState()
+    val text = viewModel.text2.observeAsState()
     var state_text by mutableStateOf("start")
     val code = viewModel.code.observeAsState()
     val launcher = rememberLauncherForActivityResult(UserContracts()) {
@@ -61,17 +60,21 @@ fun RecordBoard(
                     onClick = {
                         l2dmanager.changeModel()
                     },
-                    ) {
+                ) {
                     Text(text = "change")
                 }
                 Button(
                     onClick = { navController.navigate("chatlist") },
-                    ) {
+                ) {
                     Text(text = "chatpage")
                 }
             }
         }
-
+        Surface(shape = RoundedCornerShape(10), tonalElevation = 1.dp,shadowElevation=1.dp, modifier = Modifier.fillMaxWidth(0.6f)) {
+            text.value?.let { Text(text = it,modifier = Modifier.padding(all = 4.dp),
+                style = MaterialTheme.typography.bodyMedium,
+                fontSize = 16.sp) }
+        }
         Button(onClick = { viewModel.changePattern() },
             modifier = Modifier
                 .align(Alignment.BottomStart)

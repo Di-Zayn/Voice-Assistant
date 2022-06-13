@@ -1,22 +1,28 @@
 package com.example.HCI_Project
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedContentScope.SlideDirection.Companion.End
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.materialIcon
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,15 +34,25 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
+import java.lang.Thread.sleep
+import java.nio.file.Files.size
 import kotlin.math.roundToInt
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
-fun chatlist(navController: NavController){
-    Column {
+fun chatlist(viewModel: AsrViewModel,navController: NavController){
+    Column(
+        Modifier
+            .background(Color(0xFFECECEC))
+            .fillMaxSize()) {
         Button(onClick = { navController.navigate("assistant") },Modifier.padding(7.dp)) {
             Text(text = "< Back")
         }
-        LazyColumn{items(VoiceTTS.responce_list){text ->oneList(text)} }
+        LazyColumn(
+            Modifier
+                .background(Color(0xFFEDEDED))
+                .fillMaxWidth()
+                .fillMaxHeight(0.95f)){items(VoiceTTS.responce_list){ text ->oneList(text)} }
 
     }
 
@@ -86,7 +102,10 @@ fun assistantList(text:String){
 
 @Composable
 fun speakerList(text:String){
-        Row(Modifier.padding(15.dp).fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+        Row(
+            Modifier
+                .padding(15.dp)
+                .fillMaxWidth(), horizontalArrangement = Arrangement.End) {
             Column(horizontalAlignment = Alignment.End) {
                 Text(text = "User", color = MaterialTheme.colorScheme.secondary
                 )

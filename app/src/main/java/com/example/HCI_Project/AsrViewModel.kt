@@ -25,6 +25,9 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
     private val _text = MutableLiveData<String>()
     val text = _text
 
+    private val _text2 = MutableLiveData<String>()
+    val text2 = _text2
+
     private val _code = MutableLiveData("0")
     val code = _code
 
@@ -33,7 +36,9 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
     init {
         asr.registerListener(this)
     }
-
+    fun resetCode() {
+        _code.value = "0"
+    }
     fun changePattern() {
         if (pattern == "Chat") {
             pattern = "Assistant"
@@ -89,7 +94,14 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
                 Log.i(TAG, "UNIT结果:"+params);
                 var res= params!!.split("\"")
                 var index=res.indexOf("normalized_word")
-                VoiceTTS.start(res[index+2])
+                if(res[index+2]=="errno"){
+                    VoiceTTS.start("不好意思，我没有听懂")
+                    _text2.value="不好意思，我没有听懂"
+                }else{
+                    VoiceTTS.start(res[index+2])
+                    _text2.value=res[index+2]
+                }
+
             }
 
             SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL -> {

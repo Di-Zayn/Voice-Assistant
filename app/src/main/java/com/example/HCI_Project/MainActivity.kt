@@ -95,7 +95,7 @@ fun MyApp(asr:AsrViewModel) {
                 live2d(asr,navController)
             }
             composable("chatlist") {
-                chatlist(navController)
+                chatlist(asr,navController)
             }
         }
     }
