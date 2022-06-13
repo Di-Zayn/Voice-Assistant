@@ -36,7 +36,6 @@ fun RecordBoard(
 
                 viewModel.stop()
                 state_text="start"
-                VoiceTTS.start("你好")
                 //说完话增加模拟点击
                 SimulateTouch.simulateTouchEvent(l2dview, l2dview.width/2f,l2dview.height/2f)
             }

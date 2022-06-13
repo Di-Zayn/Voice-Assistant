@@ -20,8 +20,6 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
     // 能否在此注入全局的context 从而将其变为单例
     private var asr: EventManager = EventManagerFactory.create(context, "asr")
 
-    //说话的记录
-    public var speak_list= ArrayList<String>()
 
 
     private val _text = MutableLiveData<String>()
@@ -58,9 +56,11 @@ class AsrViewModel(context: Context) : ViewModel(), EventListener {
             }
             if (params.contains("\"final_result\"")) {
                 // 一句话的最终识别结果
-                val result=JSONObject(params).getString("best_result")
-                _text.value = result
-                speak_list.add(result)
+               // val result=JSONObject(params).getString("best_result")
+                var (zero, one, two)=JSONObject(params).getString("results_recognition").split("\"")
+                _text.value = one
+                VoiceTTS.responce_list.add("$"+one)
+                VoiceTTS.start("你好")
             }
         }
 

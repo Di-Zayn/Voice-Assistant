@@ -2,6 +2,9 @@ package com.example.HCI_Project
 
 import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.baidu.tts.client.SpeechError
 import com.baidu.tts.client.SpeechSynthesizer
 import com.baidu.tts.client.SpeechSynthesizerListener
@@ -16,7 +19,7 @@ object VoiceTTS : SpeechSynthesizerListener {
     //TTS对象
     private lateinit var mSpeechSynthesizer:SpeechSynthesizer
     //存放回答内容
-    public var responce_list= ArrayList<String>()
+    public var responce_list by mutableStateOf (ArrayList<String>())
     //初始化TTS
     fun initTTS(mContext:Context){
         mSpeechSynthesizer = SpeechSynthesizer.getInstance()
@@ -34,8 +37,8 @@ object VoiceTTS : SpeechSynthesizerListener {
     }
     //开始播放，保存回答内容
     fun start(text:String){
-        responce_list.add(text)
         mSpeechSynthesizer.speak(text)
+        responce_list.add("#"+text)
     }
 
     fun pause(){
@@ -75,6 +78,7 @@ object VoiceTTS : SpeechSynthesizerListener {
     override fun onSpeechFinish(p0: String?) {
         Log.i(TAG,"播放结束")
     }
+
 
     override fun onError(p0: String?, p1: SpeechError?) {
         Log.i(TAG, "出错$p0$p1")

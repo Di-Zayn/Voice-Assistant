@@ -53,7 +53,6 @@ fun live2d(
         RecordBoard(viewModel,view,live2DMgr,navController)
 
     }
-    VoiceTTS.start("你好，有什么可以帮助您的？")
 
     FileManager.init(context)
 
