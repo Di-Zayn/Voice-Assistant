@@ -25,6 +25,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
@@ -35,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.HCI_Project.ui.theme.Pink80
 import com.example.HCI_Project.ui.theme.PurpleGrey80
 import jp.live2d.sample.LAppLive2DManager
 import jp.live2d.sample.LAppLive2DManager.TAG
@@ -50,7 +52,7 @@ fun RecordBoard(
 
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    val size by animateDpAsState(if (isPressed) 30.dp else 20.dp)
+    val size by animateDpAsState(if (isPressed) 36.dp else 24.dp)
     var show by remember { mutableStateOf(true) }
 
     var response by remember { mutableStateOf(true) }
@@ -79,13 +81,31 @@ fun RecordBoard(
         }
     }
     Box(modifier = Modifier.fillMaxSize()){
-        Surface(shape = RectangleShape,
-            modifier = Modifier
-                .height(50.dp)
+        Box(modifier = Modifier
+                .padding(10.dp)
+                .height(60.dp)
                 .fillMaxWidth()) {
-           Box() {
+//           Box() {
                 //text.value?.let { Greeting(it) }
-                IconButton(
+               IconButton(
+                   onClick = { viewModel.changePattern()
+                       click2 = !click2},
+                   modifier = Modifier
+                       .align(Alignment.CenterStart)
+//                       .clip(CircleShape)
+//                       .size(100.dp)
+               ) {
+                   if(click2){
+                       Icon(imageVector = Icons.Outlined.ContactSupport, contentDescription = "changePattern")
+                   }
+                   else {
+                       Icon(imageVector = Icons.Outlined.Launch, contentDescription = "changePattern")
+                   }
+                   Icon(imageVector = Icons.Sharp.Autorenew, contentDescription = "", Modifier.size(60.dp).rotate(rotate2))
+
+                   //Text(text = "changePattern")
+               }
+               IconButton(
                     onClick = {
                         l2dmanager.changeModel()
                         click1=!click1 },
@@ -106,7 +126,7 @@ fun RecordBoard(
                     Icon(imageVector = Icons.Outlined.Forum, contentDescription = "chatpage", Modifier.requiredSize(40.dp))
                     //Text(text = "chatpage")
                 }
-            }
+//            }
         }
 //        AnimatedVisibility(
 //            visible = show,
@@ -140,30 +160,11 @@ fun RecordBoard(
             //}
         }
         IconButton(
-            onClick = { viewModel.changePattern()
-                      click2 = !click2},
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .offset(20.dp, -20.dp)
-                .clip(CircleShape)
-                .size(100.dp)
-        ) {
-            if(click2){
-                Icon(imageVector = Icons.Outlined.ContactSupport, contentDescription = "changePattern")
-            }
-            else {
-                Icon(imageVector = Icons.Outlined.Launch, contentDescription = "changePattern")
-            }
-            Icon(imageVector = Icons.Sharp.Autorenew, contentDescription = "", Modifier.size(60.dp).rotate(rotate2))
-
-            //Text(text = "changePattern")
-        }
-        IconButton(
             interactionSource = interactionSource,
             onClick={},
             modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .offset(size * 1.5f - 20.dp - 40.dp, size * 1.5f - 20.dp - 40.dp)
+                .align(Alignment.BottomStart)
+                .offset(- size * 1.5f + 20.dp + 40.dp, size * 1.5f - 20.dp - 40.dp)
                 .clip(CircleShape)
                 .size(size * 3)
                 .background(PurpleGrey80)
